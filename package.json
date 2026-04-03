@@ -3,11 +3,15 @@
   "author": {
     "name": "h0lycow1991"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Scans your codebase for lazy comments. You'll fix them later. You won't.",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/holycow1991/toilet-driven-development"
+  },
   "bin": {
-    "tdd": "./bin/tdd.js"
+    "tdd": "bin/tdd.js"
   },
   "scripts": {
     "start": "node bin/tdd.js",
