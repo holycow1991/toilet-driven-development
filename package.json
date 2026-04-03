@@ -10,7 +10,8 @@
     "tdd": "./bin/tdd.js"
   },
   "scripts": {
-    "start": "node bin/tdd.js"
+    "start": "node bin/tdd.js",
+    "test": "node --test test/**/*.test.js"
   },
   "keywords": [
     "todo",
