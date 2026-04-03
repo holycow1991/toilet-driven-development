@@ -1,0 +1,23 @@
+{
+  "name": "toilet-driven-development",
+  "author": {
+    "name": "h0lycow1991"
+  },
+  "version": "1.0.0",
+  "description": "Scans your codebase for lazy comments. You'll fix them later. You won't.",
+  "main": "src/index.js",
+  "bin": {
+    "tdd": "./bin/tdd.js"
+  },
+  "scripts": {
+    "start": "node bin/tdd.js"
+  },
+  "keywords": [
+    "todo",
+    "fixme",
+    "hack",
+    "productivity",
+    "lies"
+  ],
+  "license": "MIT"
+}
