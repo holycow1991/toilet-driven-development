@@ -1,9 +1,30 @@
-const fs = require('fs');
-const path = require('path');
-const { LAZY_PATTERNS } = require('./patterns');
+const fs = require("fs");
+const path = require("path");
+const { LAZY_PATTERNS } = require("./patterns");
 
-const IGNORED_DIRS = new Set(['node_modules', '.git', 'dist', 'build', 'coverage', '.next']);
-const CODE_EXTENSIONS = new Set(['.js', '.ts', '.jsx', '.tsx', '.mjs', '.cjs', '.py', '.go', '.java', '.cs', '.php', '.rb', '.rs']);
+const IGNORED_DIRS = new Set([
+  "node_modules",
+  ".git",
+  "dist",
+  "build",
+  "coverage",
+  ".next",
+]);
+const CODE_EXTENSIONS = new Set([
+  ".js",
+  ".ts",
+  ".jsx",
+  ".tsx",
+  ".mjs",
+  ".cjs",
+  ".py",
+  ".go",
+  ".java",
+  ".cs",
+  ".php",
+  ".rb",
+  ".rs",
+]);
 
 function scanDir(dir) {
   const results = [];
@@ -22,7 +43,10 @@ function scanDir(dir) {
 
       if (entry.isDirectory()) {
         walk(fullPath);
-      } else if (entry.isFile() && CODE_EXTENSIONS.has(path.extname(entry.name))) {
+      } else if (
+        entry.isFile() &&
+        CODE_EXTENSIONS.has(path.extname(entry.name))
+      ) {
         results.push(...scanFile(fullPath));
       }
     }
@@ -37,7 +61,7 @@ function scanFile(filePath) {
   let lines;
 
   try {
-    lines = fs.readFileSync(filePath, 'utf8').split('\n');
+    lines = fs.readFileSync(filePath, "utf8").split("\n");
   } catch {
     return findings;
   }

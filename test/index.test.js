@@ -6,6 +6,7 @@ const path     = require('node:path');
 const { scanDir }          = require('../src/scanner');
 const { LAZY_PATTERNS }    = require('../src/patterns');
 const { EXCUSES, FLUSH_MESSAGES, randomFrom } = require('../src/quotes');
+const { parseLimit, parseTargetDir, exceedsLimit } = require('../src/limit');
 
 // ── scanner ───────────────────────────────────────────────────────────────────
 
@@ -87,4 +88,43 @@ test('EXCUSES and FLUSH_MESSAGES are non-empty arrays of strings', () => {
     assert.ok(Array.isArray(list) && list.length > 0);
     assert.ok(list.every(s => typeof s === 'string' && s.length > 0));
   }
+});
+
+// ── limit ─────────────────────────────────────────────────────────────────────
+
+test('parseLimit defaults to 999 when no --limit flag is provided', () => {
+  assert.equal(parseLimit([]), 999);
+  assert.equal(parseLimit(['./src']), 999);
+  assert.equal(parseLimit(['--other=5']), 999);
+});
+
+test('parseLimit extracts the numeric value from --limit=<n>', () => {
+  assert.equal(parseLimit(['--limit=10']), 10);
+  assert.equal(parseLimit(['./src', '--limit=50']), 50);
+  assert.equal(parseLimit(['--limit=0']), 0);
+  assert.equal(parseLimit(['--limit=1']), 1);
+});
+
+test('exceedsLimit returns true only when total is strictly greater than limit', () => {
+  assert.equal(exceedsLimit(11, 10), true);
+  assert.equal(exceedsLimit(10, 10), false);
+  assert.equal(exceedsLimit(9, 10), false);
+  assert.equal(exceedsLimit(0, 0), false);
+  assert.equal(exceedsLimit(1, 0), true);
+});
+
+test('exceedsLimit works with the default limit of 999', () => {
+  assert.equal(exceedsLimit(999, 999), false);
+  assert.equal(exceedsLimit(1000, 999), true);
+});
+
+test('parseTargetDir returns the first non-flag argument', () => {
+  assert.equal(parseTargetDir(['./src']), './src');
+  assert.equal(parseTargetDir(['./src', '--limit=10']), './src');
+  assert.equal(parseTargetDir(['--limit=10', './src']), './src');
+});
+
+test('parseTargetDir returns null when only flags are provided', () => {
+  assert.equal(parseTargetDir([]), null);
+  assert.equal(parseTargetDir(['--limit=10']), null);
 });
