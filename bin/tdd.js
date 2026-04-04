@@ -11,7 +11,11 @@ const limit = parseLimit(args);
 
 const findings = scanDir(targetDir);
 const total = printReport(findings, targetDir);
-
+// TODO
+// FIXME
+// HACK
+// REVIEW
+// XXX
 if (exceedsLimit(total, limit)) {
   console.error(
     `Found ${total} lazy comments, which exceeds the limit of ${limit}.`,
