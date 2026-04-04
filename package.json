@@ -3,7 +3,7 @@
   "author": {
     "name": "h0lycow1991"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Scans your codebase for lazy comments. You'll fix them later. You won't.",
   "main": "src/index.js",
   "repository": {
